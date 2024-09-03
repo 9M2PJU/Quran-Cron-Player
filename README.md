@@ -1,16 +1,18 @@
 
-
 # Quran-Cron-Player
+
+![image](https://github.com/user-attachments/assets/37e99bbb-83eb-4683-84b1-e6e10d663a5f)
+
 
 ## Overview
 
-The Quran-Cron-Player project provides a Docker container setup for playing Quran MP3 audio files using ALSA in an Alpine Linux-based environment. The playback is controlled by a cron job, and MP3 files are played using `mpg123`.
+The Quran-Cron-Player project provides a Docker container setup for playing Quran MP3 audio files using ALSA in an Alpine Linux-based environment. The playback is managed by cron jobs, and MP3 files are played using `mpg123`.
 
 ## Important
 
 1. **Download and Setup MP3 Files:**
-   - Download the Quran MP3 files from a reliable source.
-   - Place all downloaded MP3 files into the `quran` folder.
+   - Download Quran MP3 files from a reliable source.
+   - Place all the downloaded MP3 files into the `quran` folder inside the Docker container.
 
 ## Project Structure
 
@@ -39,12 +41,12 @@ The Quran-Cron-Player project provides a Docker container setup for playing Qura
    cd Quran-Cron-Player
    ```
 
-2. **Download Quran MP3 Files:**
-   - Obtain the Quran MP3 files from a reliable source. You can find these files on various Islamic resources or websites that provide Quran audio.
+2. **Download and Setup MP3 Files:**
+   - Obtain the Quran MP3 files from a reliable source.
    - Place all the MP3 files into the `quran` directory within the project folder.
 
-3. **Edit Crontab:**
-   - Modify the `crontab` file to set the desired times for the Quran playback.
+3. **Configure Cron Jobs:**
+   - Edit the `crontab` file to set your preferred times for Quran playback.
 
 4. **Build and Run the Docker Container:**
 
@@ -82,8 +84,4 @@ The container runs a cron job that executes `play_random_quran.sh` based on the 
 ## Contributing
 
 Feel free to submit issues or pull requests to improve the project. Contributions are welcome!
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
