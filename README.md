@@ -25,6 +25,7 @@ The Quran-Cron-Player project provides a Docker container setup for playing Qura
 ├── quran                   # Directory for Quran MP3 files
 │   ├── [MP3 files]
 └── README.md               # Project documentation
+└── timezone               # Timezone data (change if needed)
 ```
 
 ## Prerequisites
