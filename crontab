@@ -1,0 +1,6 @@
+# Run the script at 6:30 AM and 7:00 PM every day
+30 6 * * * /usr/local/bin/play_random_quran.sh
+0 19 * * * /usr/local/bin/play_random_quran.sh
+0 13 * * * /usr/local/bin/play_random_quran.sh
+
+

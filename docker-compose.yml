@@ -1,0 +1,12 @@
+
+services:
+  quran_player:
+    build: .
+    container_name: quran_player
+    devices:
+      - "/dev/snd:/dev/snd"  # Access to the host sound device
+    environment:
+      - AUDIODEV=hw:0,0  # Set the ALSA audio device
+    volumes:
+      - ./quran:/app/quran  # Mount the directory containing MP3 files
+
