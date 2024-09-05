@@ -4,10 +4,9 @@ services:
     container_name: quran_player
     devices:
       - "/dev/snd:/dev/snd"  # Access to the host sound device
-    environment:
-      - AUDIODEV=hw:0,0  # Set the ALSA audio device
     volumes:
       - ./quran:/app/quran  # Mount the directory containing MP3 files
-      - ./crontab:/etc/crontabs/root  # Map crontab file for easy editing on host
+      - ./crontab:/etc/cron.d/mycron  # Map crontab file for easy editing on host
       - /etc/localtime:/etc/localtime:ro  # Sync localtime with the host
-      - ./timezone:/etc/timezone:ro  # Map timezone file for easy editing on host
+      - /dev/snd:/dev/snd  # Map sound device
+
