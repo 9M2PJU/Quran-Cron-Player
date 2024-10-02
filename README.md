@@ -88,12 +88,7 @@ The `docker-compose.yml` file defines the services, volumes, and ports required 
 
 The container runs a cron job that executes `play_random_quran.sh` based on the schedule defined in the `crontab`. This script plays a random MP3 file from the `quran` directory.
 
-To build and run the container, use the following command:
 
-```bash
-docker-compose up --build
 
-## Contributing
 
-Feel free to submit issues or pull requests to improve the project. Contributions are welcome!
 
