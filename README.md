@@ -52,8 +52,7 @@ The Quran-Cron-Player project provides a Docker container setup for playing Qura
 4. **Build and Run the Docker Container:**
 
    ```sh
-   docker compose build
-   docker compose up -d
+   docker compose up -d --build
    ```
 
    This will build the Docker image and start the container in detached mode.
