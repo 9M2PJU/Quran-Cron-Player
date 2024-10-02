@@ -1,27 +1,31 @@
-# Use the official Debian Slim image
-FROM debian:bullseye-slim
+# Use the latest Alpine version
+FROM alpine:latest
+
+# Set the timezone environment variable
+ENV TZ=Asia/Kuala_Lumpur
 
 # Install necessary packages
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     mpg123 \
     alsa-utils \
-    cron \
+    bash \
     tzdata \
     vim \
     procps \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
+
+# Create the app directory
+RUN mkdir -p /app
 
 # Copy the script and crontab into the container
 COPY play_random_quran.sh /app/play_random_quran.sh
-COPY crontab /etc/cron.d/mycron
-RUN chmod a+x /app/play_random_quran.sh \
-    && chmod 0644 /etc/cron.d/mycron \
-    && crontab /etc/cron.d/mycron
+COPY crontab /etc/crontabs/mycron
 
-# Set timezone
-ENV TZ=Asia/Kuala_Lumpur
+# Ensure the script is executable and set the correct permissions for the crontab
+RUN chmod +x /app/play_random_quran.sh \
+    && chmod 0644 /etc/crontabs/mycron
 
-# Start cron and keep container running
-CMD ["sh", "-c", "cron -f"]
+# Start cron and keep the container running
+CMD ["crond", "-f"]
 
