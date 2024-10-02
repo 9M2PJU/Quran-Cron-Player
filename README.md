@@ -59,27 +59,39 @@ The Quran-Cron-Player project provides a Docker container setup for playing Qura
 
 ## Configuration
 
-- **Timezone Synchronization:** Ensure that `/etc/localtime` is correctly mapped to keep the container’s timezone synchronized with the host.
-- **Sound Device Access:** Map `/dev/snd` to allow audio playback through ALSA.
-- **Quran MP3 Files:** Ensure that MP3 files are correctly placed in the `quran` directory.
+### Timezone Synchronization
+Ensure that `/etc/localtime` is correctly mapped to keep the container’s timezone synchronized with the host.
+
+### Sound Device Access
+Map `/dev/snd` to allow audio playback through ALSA.
+
+### Quran MP3 Files
+Place your Quran MP3 files in the `quran` directory.
 
 ## Dockerfile
 
-The `Dockerfile` sets up an Alpine-based environment with `mpg123` for MP3 playback and cron. It includes:
+The Dockerfile creates an Alpine-based environment with `mpg123` for MP3 playback and `cron`. It includes:
 
-- Installation of necessary packages
-- Configuring cron jobs
-- Copying source files and configuration
+- Installation of necessary packages (`busybox-suid`, `tzdata`, `mpg123`, `alsa-lib`, `alsa-utils`)
+- Configuration of cron jobs to schedule playback
+- Copying of source files and timezone configuration
 
 ## Docker Compose
 
-The `docker-compose.yml` file defines the services, volumes, and ports required for the project. Key points:
+The `docker-compose.yml` file defines the services, volumes, and ports required for the project. Key points include:
 
-- **Volume Mappings:** Ensure timezone and sound device access.
+- Volume mappings for timezone and sound device access.
+- Mounting the `quran` directory for MP3 files.
+- Mounting the `crontab` for easy cron job management.
 
 ## Usage
 
-The container runs a cron job that executes `play_random_quran.sh` based on the schedule defined in the crontab. This script plays a random MP3 file from the `quran` directory.
+The container runs a cron job that executes `play_random_quran.sh` based on the schedule defined in the `crontab`. This script plays a random MP3 file from the `quran` directory.
+
+To build and run the container, use the following command:
+
+```bash
+docker-compose up --build
 
 ## Contributing
 
