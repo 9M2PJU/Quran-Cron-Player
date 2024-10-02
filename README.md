@@ -11,7 +11,7 @@ The Quran-Cron-Player project provides a Docker container setup for playing Qura
 ## Important
 
 1. **Download and Setup MP3 Files:**
-   - Download Quran MP3 files from a reliable source.
+   - Download Quran MP3 files from a reliable source like https://quranicaudio.com/.
    - Place all the downloaded MP3 files into the `quran` folder.
 
 ## Project Structure
