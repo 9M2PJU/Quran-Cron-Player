@@ -1,31 +1,20 @@
-# Use the latest Alpine version
+# Use Alpine Linux as the base image
 FROM alpine:latest
 
-# Set the timezone environment variable
-ENV TZ=Asia/Kuala_Lumpur
+# Install required packages including cron, audio tools, and dependencies
+RUN apk add --no-cache busybox-suid tzdata mpg123 alsa-lib alsa-utils
 
-# Install necessary packages
-RUN apk add --no-cache \
-    mpg123 \
-    alsa-utils \
-    bash \
-    tzdata \
-    vim \
-    procps \
-    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-    && echo $TZ > /etc/timezone
+# Set the working directory in the container
+WORKDIR /app
 
-# Create the app directory
-RUN mkdir -p /app
+# Copy the timezone file to the container
+COPY timezone /etc/localtime
 
-# Copy the script and crontab into the container
+# Copy the play_random_quran.sh script to the container
 COPY play_random_quran.sh /app/play_random_quran.sh
-COPY crontab /etc/crontabs/mycron
 
-# Ensure the script is executable and set the correct permissions for the crontab
-RUN chmod +x /app/play_random_quran.sh \
-    && chmod 0644 /etc/crontabs/mycron
+# Make the script executable
+RUN chmod a+x /app/play_random_quran.sh
 
-# Start cron and keep the container running
-CMD ["crond", "-f"]
-
+# Use an entrypoint script to start multiple processes
+ENTRYPOINT ["/bin/sh", "-c", "crond -f -L /var/log/cron.log"]
