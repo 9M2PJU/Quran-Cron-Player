@@ -43,52 +43,61 @@ The Quran-Cron-Player project provides a Docker container setup for playing Qura
    ```
 
 2. **Download and Setup MP3 Files:**
-   - Obtain the Quran MP3 files from a reliable source.
-   - Place all the MP3 files into the `quran` directory within the project folder.
+   - Download Quran MP3 files from a reliable source.
+   - Place all the MP3 files into the `quran` directory within your project folder.
 
-3. **Configure Cron Jobs:**
-   - Edit the `crontab` file to set your preferred times for Quran playback.
+3. **Configure Timezone:**
+   - Edit the `timezone` file to specify your desired timezone (e.g., `Asia/Kuala_Lumpur`). This will ensure that the container runs with the correct local time.
 
-4. **Build and Run the Docker Container:**
+4. **Configure Cron Jobs:**
+   - Edit the `crontab` file to define your preferred playback times. The default setup will play Quran audio at specified intervals (e.g., 6:30 AM, 7 PM, and 12 midnight).
+
+5. **Build and Run the Docker Container:**
 
    ```sh
    docker compose up -d --build
    ```
 
-   This will build the Docker image and start the container in detached mode.
+   This command will build the Docker image and start the container in detached mode.
 
-## Configuration
+## Configuration Details
 
 ### Timezone Synchronization
-Ensure that `/etc/localtime` is correctly mapped to keep the container’s timezone synchronized with the host.
+The Docker container is configured to synchronize its timezone with the host by mapping `/etc/localtime`. Ensure the timezone file reflects your local timezone, such as Asia/Kuala_Lumpur.
 
 ### Sound Device Access
-Map `/dev/snd` to allow audio playback through ALSA.
+The `/dev/snd` device is mapped to allow audio playback through ALSA. This ensures that audio output from the container can be routed to the host's sound system.
 
 ### Quran MP3 Files
-Place your Quran MP3 files in the `quran` directory.
+Store your Quran MP3 files in the `quran` directory. The playback script will randomly select an MP3 file to play at the scheduled times defined in the `crontab`.
 
-## Dockerfile
+## Dockerfile Overview
 
-The Dockerfile creates an Alpine-based environment with `mpg123` for MP3 playback and `cron`. It includes:
+The Dockerfile sets up an Alpine-based environment tailored for audio playback and cron scheduling. Key features include:
 
-- Installation of necessary packages (`busybox-suid`, `tzdata`, `mpg123`, `alsa-lib`, `alsa-utils`)
-- Configuration of cron jobs to schedule playback
-- Copying of source files and timezone configuration
+- **Package Installation**: Installs essential packages for cron and audio playback, including:
+  - `busybox-suid`
+  - `tzdata`
+  - `mpg123` (for MP3 playback)
+  - `alsa-lib` and `alsa-utils` (for audio support)
+  
+- **Cron Job Configuration**: Prepares cron jobs for automatic execution of the playback script based on the defined schedule.
 
-## Docker Compose
+- **Source File Management**: Copies relevant scripts and configuration files into the container.
 
-The `docker-compose.yml` file defines the services, volumes, and ports required for the project. Key points include:
+## Docker Compose Configuration
 
-- Volume mappings for timezone and sound device access.
-- Mounting the `quran` directory for MP3 files.
-- Mounting the `crontab` for easy cron job management.
+The `docker-compose.yml` file outlines the services, volumes, and network settings necessary for the application. Important points include:
+
+- **Volume Mappings**:
+  - Maps the `quran` directory to access MP3 files.
+  - Mounts the `crontab` file for easy editing of cron jobs without rebuilding the container.
+  - Ensures timezone synchronization and sound device access.
 
 ## Usage
 
-The container runs a cron job that executes `play_random_quran.sh` based on the schedule defined in the `crontab`. This script plays a random MP3 file from the `quran` directory.
+The container runs a cron job that executes `play_random_quran.sh` based on the schedule defined in the `crontab`. This script selects and plays a random MP3 file from the `quran` directory, enhancing your Quran listening experience.
 
+## Contributing
 
-
-
-
+Contributions are welcome! Feel free to submit issues or pull requests to improve the project. Your feedback and suggestions help enhance this project.
