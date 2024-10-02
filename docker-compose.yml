@@ -1,12 +1,13 @@
 services:
   quran_player:
     build: .
-    container_name: quran_player
+    container_name: quran_player_container
+    restart: always
     devices:
       - "/dev/snd:/dev/snd"  # Access to the host sound device
     volumes:
       - ./quran:/app/quran  # Mount the directory containing MP3 files
-      - ./crontab:/etc/cron.d/mycron  # Map crontab file for easy editing on host
+      - ./crontab:/etc/crontabs/root  # Mount the crontab file
       - /etc/localtime:/etc/localtime:ro  # Sync localtime with the host
       - /dev/snd:/dev/snd  # Map sound device
 
